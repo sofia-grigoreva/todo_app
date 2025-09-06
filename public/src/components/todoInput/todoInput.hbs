@@ -1,0 +1,12 @@
+<div id="{{id}}">
+  <label for="{{inputId}}">{{label}}</label>
+  <input
+    type="text"
+    id="{{inputId}}"
+    placeholder="{{placeholder}}"
+    maxlength="{{maxLength}}"
+  />
+  <button id="{{buttonId}}" {{#if buttonDisabled}}disabled{{/if}}>
+    {{buttonText}}
+  </button>
+</div>

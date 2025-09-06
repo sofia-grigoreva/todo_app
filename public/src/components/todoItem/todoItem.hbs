@@ -1,0 +1,12 @@
+{{#if isEditing}}
+<li id="todoItem-{{id}}" class="editing">
+  <input type="text" class="edit-input" value="{{text}}">
+  <button class="save-btn">Save</button>
+  <button class="cancel-btn">Cancel</button>
+</li>
+{{else}}
+<li id="todoItem-{{id}}">
+  <span class="todo-text">{{text}}</span>
+  <button class="done-btn">Done</button>
+</li>
+{{/if}}

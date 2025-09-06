@@ -4,8 +4,10 @@
   "description": "",
   "main": "todos.js",
   "scripts": {
-    "startServer": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:unix": "sh build.sh",
+    "compile": "globstar -- npx handlebars public/src/**/*.hbs -m -f public/build/precompiled.js",
+    "build": "npm run compile",
+    "startServer": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
+    "globstar": "^1.0.0",
     "globals": "^16.3.0",
     "nodemon": "^3.1.10"
   }
