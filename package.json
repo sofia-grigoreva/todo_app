@@ -25,8 +25,8 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
-    "globstar": "^1.0.0",
     "globals": "^16.3.0",
+    "globstar": "^1.0.0",
     "nodemon": "^3.1.10"
   }
 }
