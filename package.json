@@ -1,0 +1,29 @@
+{
+  "name": "initial_hw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "todos.js",
+  "scripts": {
+    "startServer": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sofia-grigoreva/initial_hw.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sofia-grigoreva/initial_hw/issues"
+  },
+  "homepage": "https://github.com/sofia-grigoreva/initial_hw#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "globals": "^16.3.0",
+    "nodemon": "^3.1.10"
+  }
+}
