@@ -5,7 +5,7 @@ export default class TodoItem extends Component {
     super(parent, config, 'todoItem');
     this.deleteItem = null;
     this.updateItems = null;
-    this.isEditing = config.isEditing || false;
+    this.editState = null;
     this.color = this.generateRandomColor();
   }
 
@@ -21,6 +21,10 @@ export default class TodoItem extends Component {
     this.updateItems = updatingFunction;
   }
 
+  setEditingTodo(editingFunction) {
+    this.editState = editingFunction;
+  }
+
   generateRandomColor() {
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
@@ -28,28 +32,16 @@ export default class TodoItem extends Component {
     return `rgb(${r}, ${g}, ${b})`;
   }
 
-  setEditing(isEditing) {
-    this.isEditing = isEditing;
-    this.render(true);
-  }
-
-  render(isRerender = false) {
+  render() {
     const template = window.Handlebars.templates['todoItem.hbs'];
     
     const templateData = {
       ...this.config,
-      isEditing: this.isEditing,
       color: this.color,
     };
     
     const html = template(templateData);
-    
-    if (isRerender) {
-      this.color = this.generateRandomColor();
-      this.self.outerHTML = html;
-    } else {
-      this.parent.insertAdjacentHTML('beforeend', html);
-    }
+    this.parent.insertAdjacentHTML('beforeend', html);
     
     this.addEventListeners();
   }
@@ -57,21 +49,24 @@ export default class TodoItem extends Component {
   addEventListeners() {
     const itemElement = this.self;
 
-    if (this.isEditing) {
+    if (this.config.isEditing) {
       const saveBtn = itemElement.querySelector('.save-btn');
       const cancelBtn = itemElement.querySelector('.cancel-btn');
       const editInput = itemElement.querySelector('.edit-input');
+
+      editInput.value = this.config.text;
 
       saveBtn.addEventListener('click', () => {
         const newText = editInput.value.trim();
         if (newText) {
           this.updateItems(this.config.id, newText);
+        } else {
+          this.editState(this.config.id, false); 
         }
-        this.setEditing(false);
       });
 
       cancelBtn.addEventListener('click', () => {
-        this.setEditing(false);
+        this.editState(this.config.id, false);
       });
 
       editInput.addEventListener('keydown', (e) => {
@@ -79,10 +74,11 @@ export default class TodoItem extends Component {
           const newText = editInput.value.trim();
           if (newText) {
             this.updateItems(this.config.id, newText);
+          } else {
+            this.editState(this.config.id, false);
           }
-          this.setEditing(false);
         } else if (e.key === 'Escape') {
-          this.setEditing(false);
+          this.editState(this.config.id, false);
         }
       });
       
@@ -95,7 +91,7 @@ export default class TodoItem extends Component {
       });
 
       textSpan.addEventListener('dblclick', () => {
-        this.setEditing(true);
+        this.editState(this.config.id, true);
       });
     }
   }

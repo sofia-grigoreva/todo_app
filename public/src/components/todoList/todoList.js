@@ -11,6 +11,7 @@ export default class TodoList extends Component {
     const newItem = {
       id: Date.now(),
       text: text,
+      isEditing: false,
     };
 
     this.items.push(newItem);
@@ -27,10 +28,18 @@ export default class TodoList extends Component {
 
   updateTodo(id, newText) {
     const todoIndex = this.items.findIndex((todo) => todo.id === id);
-    this.items[todoIndex].text = newText;
-    this.items[todoIndex].isEditing = false;
-    console.log(newText);
-    this.renderItems();
+    if (todoIndex !== -1) {
+      this.items[todoIndex].text = newText;
+      this.setEditing(id, false);
+    }
+  }
+
+  setEditing(id, isEditing) {
+    const todoIndex = this.items.findIndex((todo) => todo.id === id);
+    if (todoIndex !== -1) {
+      this.items[todoIndex].isEditing = isEditing;
+      this.renderItems();
+    }
   }
 
   render() {
@@ -44,6 +53,7 @@ export default class TodoList extends Component {
       const todoItem = new TodoItem(this.self, data);
       todoItem.setDeletingTodo((id) => this.deleteTodo(id));
       todoItem.setUpdatingTodo((id, newText) => this.updateTodo(id, newText));
+      todoItem.setEditingTodo((id, isEditing) => this.setEditing(id, isEditing));
       todoItem.render();
     });
   }
