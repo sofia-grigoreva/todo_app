@@ -6,6 +6,7 @@ export default class TodoItem extends Component {
     this.deleteItem = null;
     this.updateItems = null;
     this.isEditing = config.isEditing || false;
+    this.color = this.generateRandomColor();
   }
 
   get self() {
@@ -20,21 +21,36 @@ export default class TodoItem extends Component {
     this.updateItems = updatingFunction;
   }
 
+  generateRandomColor() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+
   setEditing(isEditing) {
     this.isEditing = isEditing;
-    this.config.isEditing = isEditing;
-    this.rerender();
+    this.render(true);
   }
 
-  rerender() {
-    if (this.self) {
-      this.self.outerHTML = this.html;
-      this.addEventListeners();
+  render(isRerender = false) {
+    const template = window.Handlebars.templates['todoItem.hbs'];
+    
+    const templateData = {
+      ...this.config,
+      isEditing: this.isEditing,
+      color: this.color,
+    };
+    
+    const html = template(templateData);
+    
+    if (isRerender) {
+      this.color = this.generateRandomColor();
+      this.self.outerHTML = html;
+    } else {
+      this.parent.insertAdjacentHTML('beforeend', html);
     }
-  }
-
-  render() {
-    this.parent.insertAdjacentHTML('beforeend', this.html);
+    
     this.addEventListeners();
   }
 
