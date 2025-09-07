@@ -6,7 +6,9 @@ export default class TodoItem extends Component {
     this.deleteItem = null;
     this.updateItems = null;
     this.editState = null;
-    this.color = this.generateRandomColor();
+    if (!config.color) {
+      this.config.color = this.generateRandomColor();
+    }
   }
 
   get self() {
@@ -37,7 +39,7 @@ export default class TodoItem extends Component {
     
     const templateData = {
       ...this.config,
-      color: this.color,
+      color: this.config.color,
     };
     
     const html = template(templateData);
@@ -91,6 +93,7 @@ export default class TodoItem extends Component {
       });
 
       textSpan.addEventListener('dblclick', () => {
+        this.config.color = this.generateRandomColor();
         this.editState(this.config.id, true);
       });
     }
