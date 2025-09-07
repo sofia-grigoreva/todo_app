@@ -24,8 +24,8 @@ export default class TodoInput extends Component {
     });
 
     addTodoInput.addEventListener('keydown', ({ key }) => {
-      if (key === 'Enter' && addTodoInput.value.length >= 3 && this.onAddTodo) {
-        this.onAddTodo(addTodoInput.value);
+      if (key === 'Enter' && addTodoInput.value.length >= 3) {
+        this.addTodo(addTodoInput.value);
         addTodoInput.value = '';
         addTodoButton.disabled = true;
       }
