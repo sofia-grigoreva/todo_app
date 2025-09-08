@@ -41,18 +41,34 @@ export default class TodoItem extends Component {
     this.addEventListeners();
   }
 
+  get saveBtn() {
+    return this.self.querySelector('.save-btn');
+  }
+
+  get cancelBtn() {
+    return this.self.querySelector('.cancel-btn');
+  }
+
+  get editInput() {
+    return this.self.querySelector('.edit-input');
+  }
+
+  get doneBtn() {
+    return this.self.querySelector('.done-btn');
+  }
+
+  get textSpan() {
+    return this.self.querySelector('.todo-text');
+  }
+
   addEventListeners() {
     const itemElement = this.self;
 
     if (this.state.isEditing) {
-      const saveBtn = itemElement.querySelector('.save-btn');
-      const cancelBtn = itemElement.querySelector('.cancel-btn');
-      const editInput = itemElement.querySelector('.edit-input');
+      this.editInput.value = this.props.text;
 
-      editInput.value = this.props.text;
-
-      saveBtn.addEventListener('click', () => {
-        const newText = editInput.value.trim();
+      this.saveBtn.addEventListener('click', () => {
+        const newText = this.editInput.value.trim();
         if (newText) {
             this.props.text = newText;
             this.state.isEditing = false;
@@ -63,14 +79,14 @@ export default class TodoItem extends Component {
         }
       });
 
-      cancelBtn.addEventListener('click', () => {
+      this.cancelBtn.addEventListener('click', () => {
         this.state.isEditing = false;
         this.rerender();
       });
 
-      editInput.addEventListener('keydown', (e) => {
+      this.editInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-          const newText = editInput.value.trim();
+          const newText = this.editInput.value.trim();
           if (newText) {
             this.props.text = newText;
             this.state.isEditing = false;
@@ -86,14 +102,11 @@ export default class TodoItem extends Component {
       });
       
     } else {
-      const doneBtn = itemElement.querySelector('.done-btn');
-      const textSpan = itemElement.querySelector('.todo-text');
-
-      doneBtn.addEventListener('click', () => {
-        this.deleteItem(this);
+      this.doneBtn.addEventListener('click', () => {
+        this.state.deleteItem(this);
       });
 
-      textSpan.addEventListener('dblclick', () => {
+      this.textSpan.addEventListener('dblclick', () => {
         this.state.color = generateRandomColor();
         this.state.isEditing = true;
         this.rerender();
