@@ -1,11 +1,5 @@
 import Component from '../core/baseComponent.js';
-
-function generateRandomColor() {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return `rgb(${r}, ${g}, ${b})`;
-  }
+import { generateRandomColor } from '../../helpers/colorHelper.js'; 
 
 export default class TodoItem extends Component {
   constructor(parent, props) {
