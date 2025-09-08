@@ -1,86 +1,87 @@
 import Component from '../core/baseComponent.js';
 
-export default class TodoItem extends Component {
-  constructor(parent, config) {
-    super(parent, config, 'todoItem');
-    this.deleteItem = null;
-    this.updateItems = null;
-    this.editState = null;
-    if (!config.color) {
-      this.config.color = this.generateRandomColor();
-    }
-  }
-
-  get self() {
-    return document.querySelector(`#todoItem-${this.config.id}`);
-  }
-
-  setDeletingTodo(deleteFunction) {
-    this.deleteItem = deleteFunction;
-  }
-
-  setUpdatingTodo(updatingFunction) {
-    this.updateItems = updatingFunction;
-  }
-
-  setEditingTodo(editingFunction) {
-    this.editState = editingFunction;
-  }
-
-  generateRandomColor() {
+function generateRandomColor() {
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
     const b = Math.floor(Math.random() * 256);
     return `rgb(${r}, ${g}, ${b})`;
   }
 
+export default class TodoItem extends Component {
+  constructor(parent, props) {
+    super(parent, props, 'todoItem', { 'deleteItem': null,
+      'isEditing': false,
+      'color': null
+     });
+  }
+
+  get self() {
+    return document.querySelector(`#todoItem-${this.props.id}`);
+  }
+
+  setFunctions(deleteFunction) {
+    this.state.deleteItem = deleteFunction;
+  }
+
   render() {
-    const template = window.Handlebars.templates['todoItem.hbs'];
-    
-    const templateData = {
-      ...this.config,
-      color: this.config.color,
-    };
-    
-    const html = template(templateData);
-    this.parent.insertAdjacentHTML('beforeend', html);
-    
+    const context = {
+      ...this.state,
+      ...this.props,
+    }
+    this.parent.insertAdjacentHTML('afterbegin', this.html(context));
+    this.addEventListeners();
+  }
+
+  rerender() {
+    const context = {
+      ...this.state,
+      ...this.props,
+    }
+    this.self.innerHTML = this.html(context);
     this.addEventListeners();
   }
 
   addEventListeners() {
     const itemElement = this.self;
 
-    if (this.config.isEditing) {
+    if (this.state.isEditing) {
       const saveBtn = itemElement.querySelector('.save-btn');
       const cancelBtn = itemElement.querySelector('.cancel-btn');
       const editInput = itemElement.querySelector('.edit-input');
 
-      editInput.value = this.config.text;
+      editInput.value = this.props.text;
 
       saveBtn.addEventListener('click', () => {
         const newText = editInput.value.trim();
         if (newText) {
-          this.updateItems(this.config.id, newText);
+            this.props.text = newText;
+            this.state.isEditing = false;
+            this.rerender();
         } else {
-          this.editState(this.config.id, false); 
+          this.state.isEditing = false;
+          this.rerender();
         }
       });
 
       cancelBtn.addEventListener('click', () => {
-        this.editState(this.config.id, false);
+        this.state.isEditing = false;
+        this.rerender();
       });
 
       editInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           const newText = editInput.value.trim();
           if (newText) {
-            this.updateItems(this.config.id, newText);
+            this.props.text = newText;
+            this.state.isEditing = false;
+            this.rerender();
           } else {
-            this.editState(this.config.id, false);
+            this.state.isEditing = false;
+            this.rerender();
           }
         } else if (e.key === 'Escape') {
-          this.editState(this.config.id, false);
+            this.state.isEditing = false;
+            this.rerender();
         }
       });
       
@@ -89,12 +90,13 @@ export default class TodoItem extends Component {
       const textSpan = itemElement.querySelector('.todo-text');
 
       doneBtn.addEventListener('click', () => {
-        this.deleteItem(this.config.id);
+        this.deleteItem(this);
       });
 
       textSpan.addEventListener('dblclick', () => {
-        this.config.color = this.generateRandomColor();
-        this.editState(this.config.id, true);
+        this.state.color = generateRandomColor();
+        this.state.isEditing = true;
+        this.rerender();
       });
     }
   }

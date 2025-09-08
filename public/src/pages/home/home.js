@@ -1,4 +1,3 @@
-import config from '../../shared/config.js';
 import TodoInput from '../../components/todoInput/todoInput.js';
 import TodoList from '../../components/todoList/todoList.js';
 
@@ -16,10 +15,10 @@ export default class Home {
 
     this.#parent.appendChild(this.#self);
 
-    const todoList = new TodoList(this.#self, config.todoList);
+    const todoList = new TodoList(this.#self, { id: 'todo-list'});
     todoList.render();
 
-    const todoInput = new TodoInput(this.#self, config.todoInput);
+    const todoInput = new TodoInput(this.#self, { id: 'todo-input'});
     todoInput.setAddingTodo((text) => todoList.addTodo(text));
     todoInput.render();
   }

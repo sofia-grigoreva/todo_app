@@ -1,12 +1,12 @@
-<div id="{{id}}">
-  <label for="{{inputId}}">{{label}}</label>
+<div id="todo-input-container">
+  <label for="todo-input">New TODO</label>
   <input
     type="text"
-    id="{{inputId}}"
-    placeholder="{{placeholder}}"
-    maxlength="{{maxLength}}"
+    id="todo-input"
+    placeholder="Enter your todo..."
+    maxlength="100"
   />
-  <button id="{{buttonId}}" {{#if buttonDisabled}}disabled{{/if}}>
-    {{buttonText}}
+  <button id="add-todo-btn" {{#if buttonDisabled}}disabled{{/if}}>
+    Add
   </button>
 </div>
