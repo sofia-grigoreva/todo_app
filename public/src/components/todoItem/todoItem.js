@@ -9,10 +9,11 @@ function generateRandomColor() {
 
 export default class TodoItem extends Component {
   constructor(parent, props) {
-    super(parent, props, 'todoItem', { 'deleteItem': null,
+    super(parent, props, 'todoItem', {
       'isEditing': false,
       'color': null
      });
+     this.deleteItem = null;
   }
 
   get self() {
@@ -20,7 +21,7 @@ export default class TodoItem extends Component {
   }
 
   setFunctions(deleteFunction) {
-    this.state.deleteItem = deleteFunction;
+    this.deleteItem = deleteFunction;
   }
 
   render() {
@@ -103,7 +104,7 @@ export default class TodoItem extends Component {
       
     } else {
       this.doneBtn.addEventListener('click', () => {
-        this.state.deleteItem(this);
+        this.deleteItem(this);
       });
 
       this.textSpan.addEventListener('dblclick', () => {

@@ -21,10 +21,7 @@ export default class TodoList extends Component {
     this.renderItems();
   }
 
-  deleteTodo(todo) {
-    console.log(this);
-    console.log(this.state);
-    console.log('-----------');
+  deleteTodo = (todo) => {
     const newItems = this.state.items.filter((item) => item !== todo);
     this.state.items = newItems;
     this.renderItems();
