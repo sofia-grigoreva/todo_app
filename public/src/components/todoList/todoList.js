@@ -3,7 +3,7 @@ import TodoItem from '../todoItem/todoItem.js';
 
 export default class TodoList extends Component {
   constructor(parent, props) {
-    super(parent,  props, 'todoList', {items: []});
+    super(parent, props, 'todoList', { items: [] });
   }
 
   addTodo(text) {
@@ -15,9 +15,9 @@ export default class TodoList extends Component {
     const newItem = new TodoItem(this.self, newItemData);
     newItem.setFunctions(this.deleteTodo);
     this.setState({
-      items: [...this.state.items, newItem]
+      items: [...this.state.items, newItem],
     });
-    
+
     this.renderItems();
   }
 
@@ -25,7 +25,7 @@ export default class TodoList extends Component {
     const newItems = this.state.items.filter((item) => item !== todo);
     this.state.items = newItems;
     this.renderItems();
-  }
+  };
 
   render() {
     this.parent.insertAdjacentHTML('afterbegin', this.html());

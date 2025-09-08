@@ -1,39 +1,17 @@
 import Component from '../core/baseComponent.js';
-import { generateRandomColor } from '../../helpers/colorHelper.js'; 
+import { generateRandomColor } from '../../helpers/colorHelper.js';
 
 export default class TodoItem extends Component {
   constructor(parent, props) {
     super(parent, props, 'todoItem', {
-      'isEditing': false,
-      'color': null
-     });
-     this.deleteItem = null;
+      isEditing: false,
+      color: null,
+    });
+    this.deleteItem = null;
   }
 
   get self() {
     return document.querySelector(`#todoItem-${this.props.id}`);
-  }
-
-  setFunctions(deleteFunction) {
-    this.deleteItem = deleteFunction;
-  }
-
-  render() {
-    const context = {
-      ...this.state,
-      ...this.props,
-    }
-    this.parent.insertAdjacentHTML('afterbegin', this.html(context));
-    this.addEventListeners();
-  }
-
-  rerender() {
-    const context = {
-      ...this.state,
-      ...this.props,
-    }
-    this.self.innerHTML = this.html(context);
-    this.addEventListeners();
   }
 
   get saveBtn() {
@@ -56,27 +34,47 @@ export default class TodoItem extends Component {
     return this.self.querySelector('.todo-text');
   }
 
-  addEventListeners() {
-    const itemElement = this.self;
+  setFunctions(deleteFunction) {
+    this.deleteItem = deleteFunction;
+  }
 
+  setIsEditing(isEditing) {
+    this.state.isEditing = isEditing;
+    this.rerender();
+  }
+
+  render() {
+    const context = {
+      ...this.state,
+      ...this.props,
+    };
+    this.parent.insertAdjacentHTML('afterbegin', this.html(context));
+    this.addEventListeners();
+  }
+
+  rerender() {
+    const context = {
+      ...this.state,
+      ...this.props,
+    };
+    this.self.innerHTML = this.html(context);
+    this.addEventListeners();
+  }
+
+  addEventListeners() {
     if (this.state.isEditing) {
       this.editInput.value = this.props.text;
 
       this.saveBtn.addEventListener('click', () => {
         const newText = this.editInput.value.trim();
         if (newText) {
-            this.props.text = newText;
-            this.state.isEditing = false;
-            this.rerender();
-        } else {
-          this.state.isEditing = false;
-          this.rerender();
+          this.props.text = newText;
         }
+        this.setIsEditing(false);
       });
 
       this.cancelBtn.addEventListener('click', () => {
-        this.state.isEditing = false;
-        this.rerender();
+        this.setIsEditing(false);
       });
 
       this.editInput.addEventListener('keydown', (e) => {
@@ -84,18 +82,12 @@ export default class TodoItem extends Component {
           const newText = this.editInput.value.trim();
           if (newText) {
             this.props.text = newText;
-            this.state.isEditing = false;
-            this.rerender();
-          } else {
-            this.state.isEditing = false;
-            this.rerender();
-          }
+          } 
+          this.setIsEditing(false);
         } else if (e.key === 'Escape') {
-            this.state.isEditing = false;
-            this.rerender();
+          this.setIsEditing(false);
         }
       });
-      
     } else {
       this.doneBtn.addEventListener('click', () => {
         this.deleteItem(this);
@@ -103,8 +95,7 @@ export default class TodoItem extends Component {
 
       this.textSpan.addEventListener('dblclick', () => {
         this.state.color = generateRandomColor();
-        this.state.isEditing = true;
-        this.rerender();
+        this.setIsEditing(true);
       });
     }
   }

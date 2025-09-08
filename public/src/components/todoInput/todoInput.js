@@ -2,17 +2,8 @@ import Component from '../core/baseComponent.js';
 
 export default class TodoInput extends Component {
   constructor(parent, props = {}) {
-    super(parent, props, 'todoInput', {buttonDisabled: true});
-    this.addTodo = null;
-  }
-
-  setAddingTodo(addFunction) {
-    this.addTodo = addFunction;
-  }
-
-  render() {
-    this.parent.insertAdjacentHTML('afterbegin', this.html(this.state));
-    this.addEventListeners();
+    super(parent, props, 'todoInput');
+    this.addFunction = null;
   }
 
   get todoInput() {
@@ -23,25 +14,37 @@ export default class TodoInput extends Component {
     return document.getElementById('add-todo-btn');
   }
 
+  setAddingTodo(addFunction) {
+    this.addFunction = addFunction;
+  }
+
+  addTodo() {
+    if (this.todoInput.value.length >= 3) {
+      this.addFunction(this.todoInput.value);
+      this.todoInput.value = '';
+      this.todoBtn.disabled = true;
+    }
+  }
+
+  render() {
+    console.log("render");
+    this.parent.insertAdjacentHTML('afterbegin', this.html());
+    this.addEventListeners();
+  }
+
   addEventListeners() {
     this.todoInput.addEventListener('input', () => {
       this.todoBtn.disabled = this.todoInput.value.length < 3;
     });
 
     this.todoInput.addEventListener('keydown', ({ key }) => {
-      if (key === 'Enter' && this.todoInput.value.length >= 3) {
-        this.addTodo(this.todoInput.value);
-        this.todoInput.value = '';
-        this.setState({buttonDisabled: true})
+      if (key === 'Enter') {
+        this.addTodo();
       }
     });
 
     this.todoBtn.addEventListener('click', () => {
-      if (this.todoInput.value.length >= 3) {
-        this.addTodo(this.todoInput.value);
-        this.todoInput.value = '';
-        this.setState({buttonDisabled: true})
-      }
+      this.addTodo();
     });
   }
 }
