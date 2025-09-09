@@ -22,7 +22,7 @@ export default class Home {
     const todoInput = new TodoInput(this.#self, { id: 'todo-input', addFunction: (text) => todoList.addTodo(text)});
     todoInput.render();
 
-    const image = new Image(this.#self, { id: 'img', src: 'public/images/cat.jpeg'});
+    const image = new Image(this.#self, { id: 'img', src: 'public/cat.jpeg'});
     image.render();
   }
 }
