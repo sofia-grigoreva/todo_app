@@ -6,14 +6,14 @@ export default class TodoList extends Component {
     super(parent, props, 'todoList', { items: [] });
   }
 
-  addTodo(text) {
+  handleAddTodo(text) {
     const newItemData = {
       id: Date.now(),
       text: text,
+      onDeleteItem: this.handleDeleteTodo,
     };
 
     const newItem = new TodoItem(this.self, newItemData);
-    newItem.setFunctions(this.deleteTodo);
     this.setState({
       items: [...this.state.items, newItem],
     });
@@ -21,7 +21,7 @@ export default class TodoList extends Component {
     this.renderItems();
   }
 
-  deleteTodo = (todo) => {
+  handleDeleteTodo = (todo) => {
     this.state.items = this.state.items.filter((item) => item !== todo);
     this.renderItems();
   };

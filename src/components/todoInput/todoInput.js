@@ -13,9 +13,9 @@ export default class TodoInput extends Component {
     return document.getElementById('add-todo-btn');
   }
 
-  addTodo() {
+  handleAddTodo() {
     if (this.todoInput.value.length >= 3) {
-      this.props.addFunction(this.todoInput.value);
+      this.props.onSubmit(this.todoInput.value);
       this.todoInput.value = '';
       this.todoBtn.disabled = true;
     }
@@ -33,12 +33,12 @@ export default class TodoInput extends Component {
 
     this.todoInput.addEventListener('keydown', ({ key }) => {
       if (key === 'Enter') {
-        this.addTodo();
+        this.handleAddTodo();
       }
     });
 
     this.todoBtn.addEventListener('click', () => {
-      this.addTodo();
+      this.handleAddTodo();
     });
   }
 }

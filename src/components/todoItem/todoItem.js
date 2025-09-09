@@ -7,7 +7,6 @@ export default class TodoItem extends Component {
       isEditing: false,
       color: null,
     });
-    this.deleteItem = null;
   }
 
   get self() {
@@ -32,10 +31,6 @@ export default class TodoItem extends Component {
 
   get textSpan() {
     return this.self.querySelector('.todo-text');
-  }
-
-  setFunctions(deleteFunction) {
-    this.deleteItem = deleteFunction;
   }
 
   setIsEditing(isEditing) {
@@ -94,7 +89,7 @@ export default class TodoItem extends Component {
       });
     } else {
       this.doneBtn.addEventListener('click', () => {
-        this.deleteItem(this);
+        this.props.onDeleteItem(this);
       });
 
       this.textSpan.addEventListener('dblclick', () => {

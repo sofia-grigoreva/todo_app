@@ -10,6 +10,10 @@ export default class Home {
     this.#parent = rootElement;
   }
 
+  handleAddTodo(todoList) {
+    return (text) => todoList.handleAddTodo(text);
+  }
+
   render() {
     this.#self = document.createElement('div');
     this.#self.id = 'home-page';
@@ -19,7 +23,7 @@ export default class Home {
     const todoList = new TodoList(this.#self, { id: 'todo-list'});
     todoList.render();
 
-    const todoInput = new TodoInput(this.#self, { id: 'todo-input', addFunction: (text) => todoList.addTodo(text)});
+    const todoInput = new TodoInput(this.#self, { id: 'todo-input', onSubmit: this.handleAddTodo(todoList) });
     todoInput.render();
 
     const image = new Image(this.#self, { id: 'img', src: 'public/cat.jpeg'});
