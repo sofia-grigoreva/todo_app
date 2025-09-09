@@ -18,8 +18,7 @@ export default class Home {
     const todoList = new TodoList(this.#self, { id: 'todo-list'});
     todoList.render();
 
-    const todoInput = new TodoInput(this.#self, { id: 'todo-input'});
-    todoInput.setAddingTodo((text) => todoList.addTodo(text));
+    const todoInput = new TodoInput(this.#self, { id: 'todo-input', addFunction: (text) => todoList.addTodo(text)});
     todoInput.render();
   }
 }

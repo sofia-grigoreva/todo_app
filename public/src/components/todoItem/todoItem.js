@@ -45,8 +45,10 @@ export default class TodoItem extends Component {
 
   render() {
     const context = {
-      ...this.state,
-      ...this.props,
+      id: this.props.id,
+      text: this.props.text,
+      color: this.state.color,
+      isEditing: this.state.isEditing,
     };
     this.parent.insertAdjacentHTML('afterbegin', this.html(context));
     this.addEventListeners();
@@ -54,8 +56,10 @@ export default class TodoItem extends Component {
 
   rerender() {
     const context = {
-      ...this.state,
-      ...this.props,
+      id: this.props.id,
+      text: this.props.text,
+      color: this.state.color,
+      isEditing: this.state.isEditing,
     };
     this.self.innerHTML = this.html(context);
     this.addEventListeners();
