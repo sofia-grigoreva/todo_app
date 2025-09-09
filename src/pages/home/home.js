@@ -1,5 +1,6 @@
 import TodoInput from '../../components/todoInput/todoInput.js';
 import TodoList from '../../components/todoList/todoList.js';
+import Image from '../../components/image/image.js';
 
 export default class Home {
   #parent;
@@ -20,5 +21,8 @@ export default class Home {
 
     const todoInput = new TodoInput(this.#self, { id: 'todo-input', addFunction: (text) => todoList.addTodo(text)});
     todoInput.render();
+
+    const image = new Image(this.#self, { id: 'img', src: 'public/images/cat.jpeg'});
+    image.render();
   }
 }
