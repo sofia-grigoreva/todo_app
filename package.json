@@ -1,0 +1,32 @@
+{
+  "name": "initial_hw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "todos.js",
+  "scripts": {
+    "build:unix": "sh build.sh",
+    "compile": "globstar -- npx handlebars src/**/*.hbs -m -f src/build/precompiled.js",
+    "build": "npm run compile",
+    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore src/build/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sofia-grigoreva/initial_hw.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sofia-grigoreva/initial_hw/issues"
+  },
+  "homepage": "https://github.com/sofia-grigoreva/initial_hw#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "globals": "^16.3.0",
+    "globstar": "^1.0.0",
+    "nodemon": "^3.1.10"
+  }
+}
