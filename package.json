@@ -5,9 +5,9 @@
   "main": "todos.js",
   "scripts": {
     "build:unix": "sh build.sh",
-    "compile": "globstar -- npx handlebars public/src/**/*.hbs -m -f public/build/precompiled.js",
+    "compile": "globstar -- npx handlebars src/**/*.hbs -m -f src/build/precompiled.js",
     "build": "npm run compile",
-    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore public/build/"
+    "start": "npm run build && nodemon server/index.js -e html,js,css,hbs --ignore src/build/"
   },
   "repository": {
     "type": "git",
