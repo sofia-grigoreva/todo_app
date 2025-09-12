@@ -1,40 +1,30 @@
 import Component from '../core/baseComponent.js';
-import TodoItem from '../todoItem/todoItem.js';
+import {store} from '../../redux/store.js';
+import { addTodo } from '../../redux/actions.js';
 
 export default class TodoList extends Component {
   constructor(parent, props) {
-    super(parent, props, 'todoList', { items: [] });
+    super(parent, props, 'todoList', { todos: [] });
   }
 
   handleAddTodo(text) {
-    const newItemData = {
-      id: Date.now(),
-      text: text,
-      onDeleteItem: this.handleDeleteTodo,
-    };
-
-    const newItem = new TodoItem(this.self, newItemData);
-    this.setState({
-      items: [...this.state.items, newItem],
-    });
-
-    this.renderItems();
+    store.dispatch(addTodo(text, this.self));
   }
-
-  handleDeleteTodo = (todo) => {
-    this.state.items = this.state.items.filter((item) => item !== todo);
-    this.renderItems();
-  };
 
   render() {
     this.parent.insertAdjacentHTML('afterbegin', this.html());
-    this.renderItems();
+    store.subscribe(() => this.rendertodos());
+    this.rendertodos();
   }
 
-  renderItems() {
+  rendertodos() {
     this.self.innerHTML = '';
-    this.state.items.forEach((todoItem) => {
-      todoItem.render();
-    });
+    console.log("list");
+    console.log(store.getState());
+    if (store.getState().todos) {
+      store.getState().todos.forEach((todoItem) => {
+        todoItem.render();
+      });
+    }
   }
 }

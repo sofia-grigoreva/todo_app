@@ -1,5 +1,7 @@
 import Component from '../core/baseComponent.js';
 import { generateRandomColor } from '../../helpers/colorHelper.js';
+import {store} from '../../redux/store.js';
+import { deleteTodo, editTodo } from '../../redux/actions.js';
 
 export default class TodoItem extends Component {
   constructor(parent, props) {
@@ -39,6 +41,7 @@ export default class TodoItem extends Component {
   }
 
   render() {
+    console.log("item render");
     const context = {
       id: this.props.id,
       text: this.props.text,
@@ -67,7 +70,7 @@ export default class TodoItem extends Component {
       this.saveBtn.addEventListener('click', () => {
         const newText = this.editInput.value.trim();
         if (newText) {
-          this.props.text = newText;
+          store.dispatch(editTodo(this, newText));
         }
         this.setIsEditing(false);
       });
@@ -80,7 +83,7 @@ export default class TodoItem extends Component {
         if (e.key === 'Enter') {
           const newText = this.editInput.value.trim();
           if (newText) {
-            this.props.text = newText;
+            store.dispatch(editTodo(this, newText));
           } 
           this.setIsEditing(false);
         } else if (e.key === 'Escape') {
@@ -89,7 +92,7 @@ export default class TodoItem extends Component {
       });
     } else {
       this.doneBtn.addEventListener('click', () => {
-        this.props.onDeleteItem(this);
+        store.dispatch(deleteTodo(this));
       });
 
       this.textSpan.addEventListener('dblclick', () => {
