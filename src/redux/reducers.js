@@ -1,12 +1,9 @@
 import TodoItem from '../components/todoItem/todoItem.js';
+import { ADDTODO, DELETETODO, EDITTODO } from '../redux/actionTypes.js';
 
 const initialState = {
     todos: [],
 };
-
-const ADDTODO = 'ADDTODO';
-const DELETETODO = 'DELETETODO';
-const EDITTODO = 'EDITTODO';
 
 export const todoReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -34,7 +31,7 @@ export const todoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 todos: state.todos.map(todo => {
-                    if (todo === action.payload.todo) {
+                    if (todo.props.id === action.payload.todo.props.id) {
                         const updatedTodo = new TodoItem(todo.parent, {
                             id: todo.props.id,
                             text: action.payload.newText ? action.payload.newText : todo.props.text

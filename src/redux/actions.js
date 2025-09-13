@@ -1,6 +1,4 @@
-const ADDTODO = 'ADDTODO';
-const DELETETODO = 'DELETETODO';
-const EDITTODO = 'EDITTODO';
+import { ADDTODO, DELETETODO, EDITTODO }  from '../redux/actionTypes.js';
 
 export const addTodo = (text, parent) => ({
     type: ADDTODO,
