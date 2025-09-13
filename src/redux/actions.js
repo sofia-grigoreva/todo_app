@@ -1,4 +1,4 @@
-import { ADDTODO, DELETETODO, EDITTODO }  from '../redux/actionTypes.js';
+import { ADDTODO, DELETETODO, EDITTODO, COUNTUP, COUNTDOWN }  from '../redux/actionTypes.js';
 
 export const addTodo = (text) => ({
     type: ADDTODO,
@@ -22,4 +22,12 @@ export const editTodo = (id, isEditing, color, newText) => ({
         color, 
         newText
     }
+});
+
+export const countUp = (newCount) => ({
+    type: COUNTUP
+});
+
+export const countDown = (newCount) => ({
+    type: COUNTDOWN
 });

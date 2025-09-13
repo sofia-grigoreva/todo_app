@@ -12,7 +12,7 @@ export const createStore = (reducer) => {
     };
 };
 
-const combineRedcuers = (reducersMap) => {
+export const combineRedcuers = (reducersMap) => {
     return (state, action) => {
         const nextState = {};
 
