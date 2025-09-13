@@ -1,4 +1,5 @@
 import TodoItem from '../components/todoItem/todoItem.js';
+import { generateUUID } from '../helpers/idHelper.js';
 import { ADDTODO, DELETETODO, EDITTODO } from '../redux/actionTypes.js';
 
 const initialState = {
@@ -9,7 +10,7 @@ export const todoReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADDTODO:
             const newItemData = {
-                id: Date.now(),
+                id: generateUUID(),
                 text: action.payload.text,
             };
             const newItem = new TodoItem(action.payload.parent, newItemData);
