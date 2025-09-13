@@ -6,7 +6,7 @@ const initialState = {
 
 const ADDTODO = 'ADDTODO';
 const DELETETODO = 'DELETETODO';
-const CHANGETODO = 'CHANGETODO';
+const EDITTODO = 'EDITTODO';
 
 export const todoReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -30,21 +30,24 @@ export const todoReducer = (state = initialState, action) => {
                 todos: state.todos.filter((item) => item !== action.payload.todo)
             };
 
-case CHANGETODO:
-    return {
-        ...state,
-        todos: state.todos.map(todo => {
-            if (todo === action.payload.todo) {
-                console.log(action.payload.newText);
-                const updatedTodo = new TodoItem(todo.parent, {
-                    id: todo.props.id,
-                    text: action.payload.newText
-                });
-                return updatedTodo;
-            }
-            return todo;
-        })
-    };
+        case EDITTODO:
+            return {
+                ...state,
+                todos: state.todos.map(todo => {
+                    if (todo === action.payload.todo) {
+                        console.log(action.payload.newText);
+                        const updatedTodo = new TodoItem(todo.parent, {
+                            id: todo.props.id,
+                            text: action.payload.newText ? action.payload.newText : todo.props.text
+                        });
+                        updatedTodo.setState({ isEditing : action.payload.isEditing,
+                            color: action.payload.color
+                        });
+                        return updatedTodo;
+                    }
+                    return todo;
+                })
+            };
         default:
             return {
                 ...state,

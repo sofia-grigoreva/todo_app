@@ -35,11 +35,6 @@ export default class TodoItem extends Component {
     return this.self.querySelector('.todo-text');
   }
 
-  setIsEditing(isEditing) {
-    this.state.isEditing = isEditing;
-    this.rerender();
-  }
-
   render() {
     console.log("item render");
     const context = {
@@ -52,42 +47,25 @@ export default class TodoItem extends Component {
     this.addEventListeners();
   }
 
-  rerender() {
-    const context = {
-      id: this.props.id,
-      text: this.props.text,
-      color: this.state.color,
-      isEditing: this.state.isEditing,
-    };
-    this.self.innerHTML = this.html(context);
-    this.addEventListeners();
-  }
-
   addEventListeners() {
     if (this.state.isEditing) {
       this.editInput.value = this.props.text;
 
       this.saveBtn.addEventListener('click', () => {
         const newText = this.editInput.value.trim();
-        if (newText) {
-          store.dispatch(editTodo(this, newText));
-        }
-        this.setIsEditing(false);
+        store.dispatch(editTodo(this, false, this.state.color, newText));
       });
 
       this.cancelBtn.addEventListener('click', () => {
-        this.setIsEditing(false);
+        store.dispatch(editTodo(this, false, this.state.color));
       });
 
       this.editInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           const newText = this.editInput.value.trim();
-          if (newText) {
-            store.dispatch(editTodo(this, newText));
-          } 
-          this.setIsEditing(false);
+          store.dispatch(editTodo(this, false, this.state.color, newText));
         } else if (e.key === 'Escape') {
-          this.setIsEditing(false);
+          store.dispatch(editTodo(this, false, this.state.color));
         }
       });
     } else {
@@ -96,8 +74,7 @@ export default class TodoItem extends Component {
       });
 
       this.textSpan.addEventListener('dblclick', () => {
-        this.state.color = generateRandomColor();
-        this.setIsEditing(true);
+        store.dispatch(editTodo(this, true, generateRandomColor()));
       });
     }
   }
