@@ -36,7 +36,6 @@ export default class TodoItem extends Component {
   }
 
   render() {
-    console.log("item render");
     const context = {
       id: this.props.id,
       text: this.props.text,
@@ -68,6 +67,7 @@ export default class TodoItem extends Component {
           store.dispatch(editTodo(this, false, this.state.color));
         }
       });
+      
     } else {
       this.doneBtn.addEventListener('click', () => {
         store.dispatch(deleteTodo(this));

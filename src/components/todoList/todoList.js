@@ -19,8 +19,6 @@ export default class TodoList extends Component {
 
   rendertodos() {
     this.self.innerHTML = '';
-    console.log("list");
-    console.log(store.getState());
     if (store.getState().todos) {
       store.getState().todos.forEach((todoItem) => {
         todoItem.render();

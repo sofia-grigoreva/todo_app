@@ -1,19 +1,28 @@
-
 const ADDTODO = 'ADDTODO';
 const DELETETODO = 'DELETETODO';
 const EDITTODO = 'EDITTODO';
 
 export const addTodo = (text, parent) => ({
     type: ADDTODO,
-    payload: { text: text, parent: parent }
+    payload: { 
+        text, 
+        parent 
+    }
 });
 
 export const deleteTodo = (todo) => ({
     type: DELETETODO ,
-    payload: { todo }
+    payload: { 
+        todo 
+    }
 });
 
 export const editTodo = (todo, isEditing, color, newText) => ({
     type: EDITTODO,
-    payload: { todo: todo, isEditing: isEditing, color: color, newText: newText }
+    payload: { 
+        todo, 
+        isEditing,
+        color, 
+        newText
+    }
 });

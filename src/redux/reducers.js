@@ -35,7 +35,6 @@ export const todoReducer = (state = initialState, action) => {
                 ...state,
                 todos: state.todos.map(todo => {
                     if (todo === action.payload.todo) {
-                        console.log(action.payload.newText);
                         const updatedTodo = new TodoItem(todo.parent, {
                             id: todo.props.id,
                             text: action.payload.newText ? action.payload.newText : todo.props.text
@@ -48,6 +47,7 @@ export const todoReducer = (state = initialState, action) => {
                     return todo;
                 })
             };
+            
         default:
             return {
                 ...state,
