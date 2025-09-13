@@ -9,11 +9,12 @@ const initialState = {
 export const todoReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADDTODO:
-            const newItemData = {
+            const newItem = {
                 id: generateUUID(),
                 text: action.payload.text,
+                isEditing: false,
+                color: ''
             };
-            const newItem = new TodoItem(action.payload.parent, newItemData);
             return {
                 ...state,
                 todos: [
@@ -25,24 +26,23 @@ export const todoReducer = (state = initialState, action) => {
         case DELETETODO:
             return {
                 ...state,
-                todos: state.todos.filter((item) => item !== action.payload.todo)
+                todos: state.todos.filter((item) => item.id !== action.payload.id)
             };
 
         case EDITTODO:
             return {
                 ...state,
-                todos: state.todos.map(todo => {
-                    if (todo.props.id === action.payload.todo.props.id) {
-                        const updatedTodo = new TodoItem(todo.parent, {
-                            id: todo.props.id,
-                            text: action.payload.newText ? action.payload.newText : todo.props.text
-                        });
-                        updatedTodo.setState({ isEditing : action.payload.isEditing,
+                todos: state.todos.map(item => {
+                    if (item.id === action.payload.id) {
+                        const updatedItem = {
+                            id: item.id,
+                            text: action.payload.newText ? action.payload.newText : item.text,
+                            isEditing: action.payload.isEditing,
                             color: action.payload.color
-                        });
-                        return updatedTodo;
+                        };
+                        return updatedItem;
                     }
-                    return todo;
+                    return item;
                 })
             };
             

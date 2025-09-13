@@ -52,29 +52,29 @@ export default class TodoItem extends Component {
 
       this.saveBtn.addEventListener('click', () => {
         const newText = this.editInput.value.trim();
-        store.dispatch(editTodo(this, false, this.state.color, newText));
+        store.dispatch(editTodo(this.props.id, false, this.state.color, newText));
       });
 
       this.cancelBtn.addEventListener('click', () => {
-        store.dispatch(editTodo(this, false, this.state.color));
+        store.dispatch(editTodo(this.props.id, false, this.state.color));
       });
 
       this.editInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           const newText = this.editInput.value.trim();
-          store.dispatch(editTodo(this, false, this.state.color, newText));
+          store.dispatch(editTodo(this.props.id, false, this.state.color, newText));
         } else if (e.key === 'Escape') {
-          store.dispatch(editTodo(this, false, this.state.color));
+          store.dispatch(editTodo(this.props.id, false, this.state.color));
         }
       });
       
     } else {
       this.doneBtn.addEventListener('click', () => {
-        store.dispatch(deleteTodo(this));
+        store.dispatch(deleteTodo(this.props.id));
       });
 
       this.textSpan.addEventListener('dblclick', () => {
-        store.dispatch(editTodo(this, true, generateRandomColor()));
+        store.dispatch(editTodo(this.props.id, true, generateRandomColor()));
       });
     }
   }

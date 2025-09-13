@@ -1,4 +1,5 @@
 import Component from '../core/baseComponent.js';
+import TodoItem from '../todoItem/todoItem.js';
 import {store} from '../../redux/store.js';
 import { addTodo } from '../../redux/actions.js';
 
@@ -20,7 +21,15 @@ export default class TodoList extends Component {
   rendertodos() {
     this.self.innerHTML = '';
     if (store.getState().todos) {
-      store.getState().todos.forEach((todoItem) => {
+      store.getState().todos.forEach((todo) => {
+        let todoItem = new TodoItem(this.self, {
+          id: todo.id,
+          text: todo.text
+        });
+        todoItem.setState( {
+          isEditing: todo.isEditing,
+          color: todo.color 
+        })
         todoItem.render();
       });
     }

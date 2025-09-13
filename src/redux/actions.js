@@ -1,24 +1,23 @@
 import { ADDTODO, DELETETODO, EDITTODO }  from '../redux/actionTypes.js';
 
-export const addTodo = (text, parent) => ({
+export const addTodo = (text) => ({
     type: ADDTODO,
     payload: { 
-        text, 
-        parent 
+        text
     }
 });
 
-export const deleteTodo = (todo) => ({
+export const deleteTodo = (id) => ({
     type: DELETETODO ,
     payload: { 
-        todo 
+        id
     }
 });
 
-export const editTodo = (todo, isEditing, color, newText) => ({
+export const editTodo = (id, isEditing, color, newText) => ({
     type: EDITTODO,
     payload: { 
-        todo, 
+        id, 
         isEditing,
         color, 
         newText
