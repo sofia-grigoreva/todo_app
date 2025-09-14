@@ -36,11 +36,12 @@ const thunk = store => dispatch => action => {
     return dispatch(action);
 };
 
-const applyMiddleware = (middleware) => {
+export const applyMiddleware = (middleware) => {
     return (createStore) => {
         return (reducer) => {
             const store = createStore(reducer);
             return {
+                ...store,
                 dispatch: action => middleware(store)(store.dispatch)(action),
                 getState: store.getState,
             }

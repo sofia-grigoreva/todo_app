@@ -1,6 +1,8 @@
-import { createStore } from '../lib/redux.js';
+import { createStore, applyMiddleware } from '../lib/redux.js';
 import { reducer } from '../redux/reducers.js';
+import { todoColorMiddleware } from '../redux/middleware.js';
 
-export const store = createStore(reducer);
+const createStoreWithMiddleware = applyMiddleware(todoColorMiddleware)(createStore);
+export const store = createStoreWithMiddleware(reducer);
 
 

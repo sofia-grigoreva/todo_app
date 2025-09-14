@@ -13,7 +13,7 @@ const todoReducer = (state = todoInitialState, action) => {
                 id: generateUUID(),
                 text: action.payload.text,
                 isEditing: false,
-                color: ''
+                color: action.payload.color
             };
             return {
                 ...state,
