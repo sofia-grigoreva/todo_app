@@ -1,8 +1,8 @@
 import Component from '../core/baseComponent.js';
 import TodoItem from '../todoItem/todoItem.js';
 import {store} from '../../redux/store.js';
-import { addTodo } from '../../redux/actions.js';
-import { getTodos } from '../../redux/selectors.js';
+import { addTodo } from '../../redux/actionCreators/todoActions.js';
+import { getTodos } from '../../redux/selectors/index.js';
 
 export default class TodoList extends Component {
   constructor(parent, props) {

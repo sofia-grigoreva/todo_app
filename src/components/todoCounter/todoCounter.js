@@ -1,6 +1,6 @@
 import Component from '../core/baseComponent.js';
 import {store} from '../../redux/store.js';
-import { getTodoNumber } from '../../redux/selectors.js';
+import { getTodoNumber } from '../../redux/selectors/todoSelectors.js';
 
 export default class TodoCounter extends Component {
   constructor(parent, props = {}) {

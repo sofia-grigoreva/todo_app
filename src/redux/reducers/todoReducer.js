@@ -1,12 +1,11 @@
-import { combineRedcuers } from '../lib/redux.js';
-import { generateUUID } from '../helpers/idHelper.js';
-import { ADDTODO, DELETETODO, EDITTODO, COUNTUP, COUNTDOWN} from '../redux/actionTypes.js';
+import { generateUUID } from '../../helpers/idHelper.js';
+import { ADDTODO, DELETETODO, EDITTODO} from '../actionTypes/todoActionTypes.js';
 
 const todoInitialState = {
     todos: []
 };
 
-const todoReducer = (state = todoInitialState, action) => {
+export const todoReducer = (state = todoInitialState, action) => {
     switch (action.type) {
         case ADDTODO:
             const newItem = {
@@ -51,30 +50,3 @@ const todoReducer = (state = todoInitialState, action) => {
             };
     }
 };
-
-const counterInitialState = {
-    count: 10
-};
-
-const counterReducer = (state = counterInitialState, action) => {
-    switch (action.type) {
-        case COUNTUP:
-            return {
-                ...state,
-                count: state.count + 1
-            };
-
-        case COUNTDOWN:
-            return {
-                ...state,
-                count: state.count - 1
-            };
-            
-        default:
-            return {
-                ...state,
-            };
-    }
-};
-
-export const reducer = combineRedcuers({ counter : counterReducer, todo : todoReducer });

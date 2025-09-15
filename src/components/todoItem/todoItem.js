@@ -1,7 +1,7 @@
 import Component from '../core/baseComponent.js';
 import { generateRandomColor } from '../../helpers/colorHelper.js';
 import {store} from '../../redux/store.js';
-import { deleteTodo, editTodo } from '../../redux/actions.js';
+import { deleteTodo, editTodo } from '../../redux/actionCreators/todoActions.js';
 
 export default class TodoItem extends Component {
   constructor(parent, props) {
