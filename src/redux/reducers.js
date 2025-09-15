@@ -34,13 +34,12 @@ const todoReducer = (state = todoInitialState, action) => {
                 ...state,
                 todos: state.todos.map(item => {
                     if (item.id === action.payload.id) {
-                        const updatedItem = {
+                        return {
                             id: item.id,
                             text: action.payload.newText ? action.payload.newText : item.text,
                             isEditing: action.payload.isEditing,
                             color: action.payload.color
                         };
-                        return updatedItem;
                     }
                     return item;
                 })

@@ -10,7 +10,7 @@ export default class TodoList extends Component {
   }
 
   handleAddTodo(text) {
-    store.dispatch(addTodo(text, this.self));
+    store.dispatch(addTodo(text));
   }
 
   render() {

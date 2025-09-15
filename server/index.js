@@ -15,5 +15,5 @@ app.get('/', (_, res) => {
 });
 
 app.listen(2727, () => {
-  console.log('Server running on port 2727');
+  console.log('Server running on http://127.0.0.1:2727');
 });

@@ -12,10 +12,6 @@ export default class Home {
     this.#parent = rootElement;
   }
 
-  handleAddTodo(text) {
-    return this.todoList.handleAddTodo(text);
-  }
-
   render() {
     this.#self = document.createElement('div');
     this.#self.id = 'home-page';
@@ -28,13 +24,13 @@ export default class Home {
     this.todoList = new TodoList(this.#self, { id: 'todo-list'});
     this.todoList.render();
 
-    const todoInput = new TodoInput(this.#self, { id: 'todo-input', onSubmit: this.handleAddTodo.bind(this) });
+    const todoInput = new TodoInput(this.#self, { id: 'todo-input', onSubmit: this.todoList.handleAddTodo });
     todoInput.render();
 
     const todoCounter = new TodoCounter(this.#self, { id: 'todo-counter'});
     todoCounter.render();
 
-    const image = new Image(this.#self, { id: 'img', src: 'public/cat.jpeg'});
+    const image = new Image(this.#self, { id: 'img', src: 'cat.jpeg', class: 'image', alt: 'Image', height: '200'});
     image.render();
   }
 }
